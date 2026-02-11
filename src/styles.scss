@@ -1,1 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global dark theme for the app */
+html, body, app-root {
+	height: 100%;
+	margin: 0;
+}
+body {
+	background: #000000; /* black background */
+	color: #ffffff;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Make ng-zorro cards and components match a dark theme */
+.ant-card {
+	background: #0b0b0b;
+	color: #ffffff;
+	border-color: #1f1f1f;
+}
+.ant-page-header {
+	background: transparent;
+	color: #ffffff;
+}
+.ant-select-selector {
+	background: #0b0b0b !important;
+	color: #ffffff !important;
+	border-color: #2a2a2a !important;
+}
+.ant-alert {
+	background: #0f0f0f;
+	border-color: #1f1f1f;
+	color: #e6e6e6;
+}
+
+/* Links and buttons */
+a, a:visited { color: #1890ff; }
+button[nz-button] { color: #ffffff; }

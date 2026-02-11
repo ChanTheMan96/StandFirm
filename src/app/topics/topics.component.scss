@@ -1,0 +1,4 @@
+.content { max-width: 960px; margin: 82px auto 32px; }
+.card-container { display:flex; flex-wrap:wrap; gap:12px; }
+.card { display:flex; align-items:center; padding:12px 16px; border-radius:6px; border:1px solid #eee; text-decoration:none; color:inherit; background:#fff; cursor:pointer; }
+.card:hover { box-shadow:0 6px 20px rgba(0,0,0,0.08); transform:translateY(-4px); }
