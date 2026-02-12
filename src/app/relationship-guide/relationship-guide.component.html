@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="page-content">
+    <section class="rg-intro">
+      <h1>Relationship Guide</h1>
+    </section>
+
+    <div *ngIf="loading" class="loading">
+      <nz-spin nzSimple></nz-spin>
+      <p>Loading passages...</p>
+    </div>
+
+    <div *ngIf="!loading">
+      <div nz-row [nzGutter]="[16, 16]">
+        <div nz-col [nzXs]="24" *ngFor="let entry of entries; let i = index">
+          <nz-card [nzTitle]="entry.title" style="margin-bottom: 16px">
+            <h4>{{ entry.ref }}</h4>
+
+            <div *ngIf="passages[i]?.verses?.length">
+              <div *ngFor="let v of passages[i]?.verses">
+                <p style="white-space: pre-wrap">{{ v.text }}</p>
+              </div>
+            </div>
+            <div *ngIf="passages[i] && !passages[i]?.verses?.length">
+              <p>{{ passages[i]?.text || "Verse text not available." }}</p>
+            </div>
+            <nz-divider></nz-divider>
+            <p class="takeaway">
+              <strong>Takeaway:</strong> {{ entry.takeaway }}
+            </p>
+          </nz-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,15 +1,17 @@
 <div class="container">
-  <div nz-row [nzGutter]="[24, 24]" class="page-content">
-  <ng-container *ngIf="!selectedEmotion">
-    <div nz-col [nzXs]="24">
-      <nz-card nzTitle="What are you struggling with today?">
-        <p nz-p>Select an emotion or challenge to find support and biblical guidance</p>
-      </nz-card>
-    </div>
+  <div class="page-content">
+    <ng-container *ngIf="!selectedEmotion">
+      <section class="emotion-intro">
+        <h1>What are you carrying today?</h1>
+        <p>
+          Select an emotion or challenge to get practical guidance and relevant
+          Scripture.
+        </p>
+        <span class="emotion-count">{{ emotions.length }} categories</span>
+      </section>
 
-    <div nz-col [nzXs]="24">
-      <div nz-row [nzGutter]="[16, 16]">
-        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="8" *ngFor="let emotion of emotions">
+      <div nz-row [nzGutter]="[16, 16]" class="emotion-grid">
+        <div nz-col [nzXs]="12" [nzSm]="12" [nzMd]="8" *ngFor="let emotion of emotions">
           <nz-card (click)="selectEmotion(emotion.emotion)" [nzHoverable]="true" class="emotion-card">
             <div class="emotion-icon-wrapper">
               <span nz-icon [nzType]="emotion.icon" nzTheme="outline" class="emotion-icon"></span>
@@ -18,68 +20,65 @@
           </nz-card>
         </div>
       </div>
-    </div>
-  </ng-container>
+    </ng-container>
 
-  <ng-container *ngIf="selectedEmotion && selectedEmotionData">
-    <div nz-col [nzXs]="24">
-      <nz-card [nzTitle]="selectedEmotionData.emotion">
-        <div class="emotion-header">
-          <div class="emotion-icon-wrapper large">
-            <span nz-icon [nzType]="selectedEmotionData.icon" nzTheme="outline" class="emotion-icon"></span>
-          </div>
-          <div class="emotion-details">
-            <p class="emotion-description">{{ selectedEmotionData.description }}</p>
-          </div>
-        </div>
-      </nz-card>
-    </div>
-
-    <ng-container *ngIf="!showingVerses">
-      <div nz-col [nzXs]="24" [nzMd]="12">
-        <nz-card nzTitle="Common Challenges">
-          <div class="card-actions">
-          </div>
-          <div class="problems-list">
-            <div class="problem-item" *ngFor="let problem of selectedEmotionData.problems">
-              <span nz-icon nzType="check-circle" nzTheme="fill" class="success-icon"></span>
-              <span>{{ problem }}</span>
+    <ng-container *ngIf="selectedEmotion && selectedEmotionData">
+      <div nz-row [nzGutter]="[24, 24]" class="detail-grid">
+        <div nz-col [nzXs]="24">
+          <nz-card [nzTitle]="selectedEmotionData.emotion">
+            <div class="emotion-header">
+              <div class="emotion-icon-wrapper large">
+                <span nz-icon [nzType]="selectedEmotionData.icon" nzTheme="outline" class="emotion-icon"></span>
+              </div>
+              <div class="emotion-details">
+                <p class="emotion-description">{{ selectedEmotionData.description }}</p>
+              </div>
             </div>
+          </nz-card>
+        </div>
+
+        <ng-container *ngIf="!showingVerses">
+          <div nz-col [nzXs]="24" [nzMd]="12">
+            <nz-card nzTitle="Common Challenges">
+              <div class="problems-list">
+                <div class="problem-item" *ngFor="let problem of selectedEmotionData.problems">
+                  <span nz-icon nzType="check-circle" nzTheme="fill" class="success-icon"></span>
+                  <span>{{ problem }}</span>
+                </div>
+              </div>
+            </nz-card>
           </div>
-        </nz-card>
-      </div>
 
       <div nz-col [nzXs]="24" [nzMd]="12">
         <nz-card nzTitle="Biblical Guidance">
-          <p nz-p>The Bible offers comfort and strength for every emotion and challenge men face. Seek God's word and wisdom through prayer and scripture reading.</p>
+          <p nz-p>{{ currentGuidance }}</p>
           <button nz-button nzType="primary" nzBlock (click)="findRelevantVerses()">Find Relevant Verses</button>
         </nz-card>
       </div>
-    </ng-container>
+        </ng-container>
 
-    <ng-container *ngIf="showingVerses">
-      <div nz-col [nzXs]="24">
-        <nz-card nzTitle="Relevant Scripture">
+        <ng-container *ngIf="showingVerses">
+          <div nz-col [nzXs]="24">
+            <nz-card nzTitle="Relevant Scripture">
+              <div *ngIf="loadingVerses" class="loading-container">
+                <nz-spin nzSimple></nz-spin>
+                <p>Loading verses from the Bible...</p>
+              </div>
 
-          <div *ngIf="loadingVerses" class="loading-container">
-            <nz-spin nzSimple></nz-spin>
-            <p>Loading verses from the Bible...</p>
+              <div *ngIf="!loadingVerses" class="verses-list">
+                <nz-alert *ngFor="let verse of selectedEmotionData.relevantVerses" nzType="info" [nzMessage]="verse.reference" [nzDescription]="verse.text" [nzCloseable]="false" class="verse-alert"></nz-alert>
+              </div>
+
+              <div class="verse-actions">
+                <button nz-button nzType="primary" nzBlock (click)="findRelevantVerses()" [disabled]="loadingVerses">
+                  <span nz-icon nzType="reload" nzTheme="outline"></span>
+                  Load More Verses
+                </button>
+              </div>
+            </nz-card>
           </div>
-
-          <div *ngIf="!loadingVerses" class="verses-list">
-            <nz-alert *ngFor="let verse of selectedEmotionData.relevantVerses" nzType="info" [nzMessage]="verse.reference" [nzDescription]="verse.text" [nzCloseable]="false" class="verse-alert"></nz-alert>
-          </div>
-
-          <div class="verse-actions">
-            <button nz-button nzType="primary" nzBlock (click)="findRelevantVerses()" [disabled]="loadingVerses">
-              <span nz-icon nzType="reload" nzTheme="outline"></span>
-              Load More Verses
-            </button>
-          </div>
-        </nz-card>
+        </ng-container>
       </div>
     </ng-container>
-  </ng-container>
-</div>
-
+  </div>
 </div>

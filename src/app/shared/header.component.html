@@ -2,28 +2,38 @@
   <div class="container">
     <div class="row align-items-center justify-content-between py-2">
       <div class="col-auto d-flex align-items-center gap-3">
-        <a href="#" (click)="goHome($event)" class="h5 mb-0 text-white"
-          >Better in Christ</a
+        <button
+          nz-button
+          nzType="default"
+          class="menu-toggle"
+          (click)="toggleMobileMenu()"
+          aria-label="Open navigation menu"
         >
-        <a routerLink="/who-i-am" class="nav-link who-link text-white p-0"
-          >Who I Am</a
-        >
-      </div>
-
-      <div class="col-auto d-flex align-items-center gap-2" style="justify-content:flex-end;">
-        <button nz-button nzType="primary" (click)="openVersionModal()">
-          {{ selectedVersion }}
+          <span class="hamburger-icon" aria-hidden="true"></span>
         </button>
+        <a href="#" (click)="goHome($event)" class="h5 mb-0 text-white">Better in Christ</a>
       </div>
     </div>
   </div>
 </nav>
 
-<!-- version modal template moved outside header to avoid layout side-effects -->
-<ng-template #versionTpl>
-  <div>
-    <nz-radio-group [(ngModel)]="selectedVersion" (ngModelChange)="changeVersion($event)">
-      <label nz-radio-button *ngFor="let v of versions" [nzValue]="v">{{ v }}</label>
-    </nz-radio-group>
+<div
+  class="mobile-menu-backdrop"
+  *ngIf="mobileMenuOpen"
+  (click)="closeMobileMenu()"
+></div>
+
+<aside class="mobile-menu" [class.open]="mobileMenuOpen">
+  <div class="mobile-menu-header">
+    <span>Better in Christ</span>
+    <button nz-button nzType="text" (click)="closeMobileMenu()" aria-label="Close navigation menu">
+      <span nz-icon nzType="close" nzTheme="outline"></span>
+    </button>
   </div>
-</ng-template>
+
+  <div class="mobile-menu-links">
+    <a href="#" (click)="goHome($event)" class="mobile-link">Emotions</a>
+    <a routerLink="/relationship-guide" (click)="closeMobileMenu()" class="mobile-link">Relationship Guide</a>
+    <a routerLink="/who-i-am" (click)="closeMobileMenu()" class="mobile-link">Who I Am</a>
+  </div>
+</aside>

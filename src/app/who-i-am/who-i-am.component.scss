@@ -1,19 +1,118 @@
-.who-container { padding: 16px 0; color: #ffffff !important; }
-.who-section { margin-bottom: 18px; }
-.who-section h3 { color: #ffffff !important; margin-bottom: 8px; font-size: 18px; }
-.who-list { list-style: none; padding: 0; margin: 0; }
-.who-list li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ffffff !important; }
-.who-list li strong { color: #ffffff !important; display: inline-block; width: auto; }
-h2 { margin-top: 0; color: #ffffff !important; }
-.verse-ref { color: #ffffff !important; }
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 24px 12px;
+  box-sizing: border-box;
+}
 
-/* Ensure card internals (ng-zorro) also use white text */
-.who-card .ant-card,
-.who-card .ant-card-body {
+.page-content {
+  margin: 20px auto;
+  max-width: 1080px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.who-intro {
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(24, 144, 255, 0.28);
+  background: linear-gradient(140deg, rgba(24, 144, 255, 0.14), rgba(24, 144, 255, 0.03));
+}
+
+.who-intro h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.who-intro p {
+  margin: 0;
+  color: #d8e3f0;
+  max-width: 740px;
+}
+
+.who-count {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(24, 144, 255, 0.45);
+  color: #9dccff;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.who-card {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+}
+
+.who-section {
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.who-section:last-child {
+  margin-bottom: 0;
+}
+
+.who-section h3 {
+  color: #ffffff;
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.who-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.who-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.who-list li:last-child {
+  border-bottom: 0;
+}
+
+.verse-ref {
+  color: #9dccff;
+}
+
+:host ::ng-deep .who-card .ant-card,
+:host ::ng-deep .who-card .ant-card-body,
+:host ::ng-deep .who-card .ant-card-body p,
+:host ::ng-deep .who-card .ant-card-body li,
+:host ::ng-deep .who-card .ant-card-body span {
   color: #ffffff !important;
 }
 
 @media (max-width: 768px) {
-  .who-list li strong { display: block; width: auto; margin-bottom: 4px; }
-}
+  .page-content {
+    margin: 12px auto;
+    padding: 0 8px;
+  }
 
+  .who-intro {
+    padding: 14px 14px 12px;
+    margin-bottom: 14px;
+  }
+
+  .who-intro h1 {
+    font-size: 22px;
+  }
+
+  .who-section {
+    padding: 12px;
+  }
+}

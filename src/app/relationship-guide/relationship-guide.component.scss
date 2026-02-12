@@ -1,0 +1,71 @@
+.page-content {
+  margin: 20px auto;
+  max-width: 1080px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  padding: 24px 12px;
+  box-sizing: border-box;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+nz-card {
+  border-radius: 12px;
+}
+
+:host ::ng-deep .ant-card-body {
+  padding: 16px 18px;
+}
+
+.takeaway {
+  margin: 0;
+  font-style: italic;
+  color: #dcdcdc;
+}
+
+.verses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  :host {
+    padding: 12px 8px;
+  }
+
+  .page-content {
+    margin: 12px auto;
+    padding: 0 8px;
+  }
+}
+
+.rg-intro {
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(24, 144, 255, 0.28);
+  background: linear-gradient(140deg, rgba(24, 144, 255, 0.14), rgba(24, 144, 255, 0.03));
+}
+
+.rg-intro h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.rg-intro p {
+  margin: 0;
+  color: #d8e3f0;
+  max-width: 740px;
+}
