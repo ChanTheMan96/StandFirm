@@ -5,56 +5,54 @@
 	box-sizing: border-box;
 }
 
-/* Ensure text within this component is white for dark theme */
-:host {
-	color: #ffffff;
-}
-
-/* Override common ng-zorro selectors to ensure readable white text */
-.ant-card, .ant-card *, .ant-page-header, .ant-page-header * {
-	color: #ffffff !important;
-}
-.ant-card .ant-card-body, .ant-card .ant-card-head-title, .ant-card .ant-card-head, .ant-card .ant-card-meta, .ant-card .ant-card-meta * {
-	color: #ffffff !important;
-}
-.ant-select-selector, .ant-select-selection-item, .ant-select-item-option-content {
-	color: #ffffff !important;
-}
-.ant-alert, .ant-alert * { color: #ffffff !important; }
-.ant-btn, .ant-btn * { color: #ffffff !important; }
-
-/* Ensure nz-card and nz-page-header titles are white (deep selector for ng-zorro elements) */
-:host ::ng-deep .ant-card-head-title,
-:host ::ng-deep .ant-card-head .ant-card-head-title,
-:host ::ng-deep .ant-card-head-title * {
-	color: #ffffff !important;
-}
-
-:host ::ng-deep .ant-page-header-heading-title,
-:host ::ng-deep .ant-page-header-heading-title * {
-	color: #ffffff !important;
-}
-
-
 .header-row {
-	max-width: 1100px;
-	margin: 0 auto;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
+	padding-bottom: 20px;
+	width: 100%;
 }
 
-.header-left { display:flex; align-items:center; gap:12px; }
-.header-back { color: #ffffff; border-radius: 6px; }
-.header-back:hover { background: rgba(255,255,255,0.04); }
 
-.page-content { max-width: 1100px; margin: 18px auto; }
+.header-left { display:flex; align-items:center; gap:12px; }
+.page-title { font-size: 28px; margin: 0; color: #ffffff; font-weight: 600; }
+
+/* Ensure back button and title are vertically centered together */
+.header-left .back-button {
+	height: 40px;
+	min-width: 48px;
+	padding: 0 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 0 !important;
+}
+.header-left .page-title {
+	line-height: 40px;
+}
+
+.header-right { display:flex; align-items:center; }
+/* version-select styling is available globally; keep only component sizing overrides here */
+.version-select { max-width: 240px; }
+
+.back-button { display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; }
+.back-button:hover { opacity: .95; }
+.back-icon { font-size:18px; line-height:1; }
+.back-text { display:inline-block; }
+
+.page-content { 
+	margin: 18px auto; 
+	max-width: 960px; 
+	box-sizing: border-box;
+	padding: 0 8px;
+}
 
 .emotion-card {
 	display:flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	gap:12px;
 	cursor:pointer;
 	padding: 18px 12px;
@@ -62,49 +60,80 @@
 	border-radius: 8px;
 	transition: transform .18s ease, box-shadow .18s ease;
 	background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+	min-height: 140px;
 }
 .emotion-card:hover { transform: translateY(-6px); box-shadow: 0 8px 18px rgba(0,0,0,0.6); }
 
+.emotion-card ::ng-deep .ant-card-body {
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+	padding: 20px 12px;
+}
+
 .emotion-icon-wrapper { width:64px; height:64px; display:flex; align-items:center; justify-content:center; }
 .emotion-icon-wrapper.large { width:110px; height:110px; }
-.emotion-icon { font-size: 28px; color: #ffffff; }
-.emotion-title { margin:0; color: #f5f5f5; font-size: 18px; }
+.emotion-icon { font-size: 28px; color: #1890ff; }
+.emotion-title { margin:0; font-size: 18px; }
+
+/* Ensure svg icon strokes/fills use primary color */
+.emotion-icon ::ng-deep svg,
+.emotion-icon ::ng-deep path {
+	fill: #1890ff;
+	stroke: #1890ff;
+}
 
 .problems-list { display:flex; flex-direction:column; gap:8px; }
 .problem-item { display:flex; gap:8px; align-items:center; color: #e6e6e6; }
 .success-icon { color: #52c41a; }
-/* Ensure nz-icon svg path uses the green fill */
 .success-icon svg,
 .success-icon::ng-deep svg {
-	fill: #52c41a !important;
+	fill: #52c41a;
 }
 .success-icon path,
 .success-icon::ng-deep path {
-	fill: #52c41a !important;
+	fill: #52c41a;
 }
 
 .loading-container { display:flex; gap:12px; align-items:center; }
 .verse-alert { margin-bottom:12px; background: transparent; }
 .back-button {
-	margin-bottom:12px;
-	color: #e6e6e6;
+	margin-bottom: 0 !important;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 6px 8px;
+	padding: 6px 10px;
+	gap: 8px;
 	min-width: 36px;
 	height: 36px;
 	border-radius: 6px;
+	background: transparent;
+	border: none;
 }
 
-/* Ensure verse reference (message) and description text are white */
+/* When nzType="primary" is applied ng-zorro will add `ant-btn-primary` — keep primary visible */
+.back-button.ant-btn-primary {
+	background-color: #1890ff;
+	border-color: #1890ff;
+	color: #ffffff;
+	box-shadow: none;
+}
+
+/* Verse alert styling kept local; overall colors are in global styles */
+.verse-alert .ant-alert-message,
+.verse-alert .ant-alert-message * {
+	color: #ffffff;
+}
+.verse-alert .ant-alert-description,
+.verse-alert .ant-alert-description * {
+	color: #e6e6e6;
+}
+
+/* Ensure the nz-alert message (reference) is white even inside ng-zorro's encapsulated markup */
 :host ::ng-deep .verse-alert .ant-alert-message,
 :host ::ng-deep .verse-alert .ant-alert-message * {
-	color: #ffffff !important;
-}
-:host ::ng-deep .verse-alert .ant-alert-description,
-:host ::ng-deep .verse-alert .ant-alert-description * {
-	color: #e6e6e6 !important;
+  color: #ffffff !important;
 }
 
 .emotion-header { display:flex; align-items:center; gap:16px; }
@@ -118,6 +147,7 @@
 .card-back { padding: 4px; border-radius: 6px; }
 .card-back:hover { opacity: .95; }
 
+
 /* Make nz-alert text more readable on dark */
 .verse-alert .ant-alert-message { color: #ffffff; }
 .verse-alert .ant-alert-description { color: #dcdcdc; }
@@ -125,4 +155,46 @@
 @media (max-width: 768px) {
 	.header-row { padding: 8px; }
 	.emotion-icon-wrapper.large { width: 84px; height: 84px; }
+
+	/* Stack header on small screens */
+	.header-row {
+		flex-direction: column;
+		align-items: stretch;
+		justify-content: flex-start;
+		gap: 8px;
+	}
+
+	.header-left {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		width: 100%;
+		gap: 8px;
+	}
+
+	.header-right {
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 0;
+	}
+
+	/* make version select easier to tap on mobile */
+	.version-select { width: 100%; max-width: 240px; }
+	.version-select ::ng-deep .ant-select-selector { width: 100% !important; }
+
+	.page-title { font-size: 20px; margin-left: 6px; }
+
+	.back-button { height: 36px; min-width: 40px; padding: 6px 8px; }
+
+	/* Tighter content spacing on mobile */
+	.page-content { margin: 12px auto; padding: 0 8px; }
+
+	.emotion-card { min-height: 120px; padding: 14px 8px; }
+
+	.emotion-icon { font-size: 22px; }
+
+	.verse-actions { margin-top: 8px; }
+
+	.verse-alert { margin-bottom: 8px; }
 }

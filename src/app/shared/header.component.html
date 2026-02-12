@@ -1,0 +1,29 @@
+<nav class="app-header text-white">
+  <div class="container">
+    <div class="row align-items-center justify-content-between py-2">
+      <div class="col-auto d-flex align-items-center gap-3">
+        <a href="#" (click)="goHome($event)" class="h5 mb-0 text-white"
+          >Better in Christ</a
+        >
+        <a routerLink="/who-i-am" class="nav-link who-link text-white p-0"
+          >Who I Am</a
+        >
+      </div>
+
+      <div class="col-auto d-flex align-items-center gap-2" style="justify-content:flex-end;">
+        <button nz-button nzType="primary" (click)="openVersionModal()">
+          {{ selectedVersion }}
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- version modal template moved outside header to avoid layout side-effects -->
+<ng-template #versionTpl>
+  <div>
+    <nz-radio-group [(ngModel)]="selectedVersion" (ngModelChange)="changeVersion($event)">
+      <label nz-radio-button *ngFor="let v of versions" [nzValue]="v">{{ v }}</label>
+    </nz-radio-group>
+  </div>
+</ng-template>

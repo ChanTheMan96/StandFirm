@@ -1,0 +1,19 @@
+.who-container { padding: 16px 0; color: #ffffff !important; }
+.who-section { margin-bottom: 18px; }
+.who-section h3 { color: #ffffff !important; margin-bottom: 8px; font-size: 18px; }
+.who-list { list-style: none; padding: 0; margin: 0; }
+.who-list li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #ffffff !important; }
+.who-list li strong { color: #ffffff !important; display: inline-block; width: auto; }
+h2 { margin-top: 0; color: #ffffff !important; }
+.verse-ref { color: #ffffff !important; }
+
+/* Ensure card internals (ng-zorro) also use white text */
+.who-card .ant-card,
+.who-card .ant-card-body {
+  color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  .who-list li strong { display: block; width: auto; margin-bottom: 4px; }
+}
+

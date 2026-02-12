@@ -34,3 +34,42 @@ body {
 /* Links and buttons */
 a, a:visited { color: #1890ff; }
 button[nz-button] { color: #ffffff; }
+
+/* Ensure nested ng-zorro elements inherit readable colors */
+.ant-card *, .ant-page-header * { color: inherit; }
+.ant-card .ant-card-body, .ant-card .ant-card-head-title, .ant-card .ant-card-head, .ant-card .ant-card-meta { color: inherit; }
+.ant-select-selection-item, .ant-select-item-option-content { color: inherit !important; }
+.ant-btn, .ant-btn * { color: inherit !important; }
+
+/* Minimal replacements for commonly used Bootstrap utilities (so we can remove bootstrap) */
+/* Container */
+.container { max-width: 1140px; margin-left: auto; margin-right: auto; padding-left: 16px; padding-right: 16px; }
+
+/* Grid-ish helpers */
+.row { display: flex; flex-wrap: wrap; align-items: center; }
+.col-auto { flex: 0 0 auto; }
+
+/* Flex utilities */
+.d-flex { display: flex !important; }
+.align-items-center { align-items: center !important; }
+.justify-content-between { justify-content: space-between !important; }
+
+/* Spacing utilities */
+.py-2 { padding-top: .5rem !important; padding-bottom: .5rem !important; }
+.p-0 { padding: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+
+/* Gap utilities (small set) */
+.gap-2 { gap: 8px !important; }
+.gap-3 { gap: 12px !important; }
+
+/* Typography / helpers */
+.h5 { font-size: 1.25rem; font-weight: 500; margin: 0; }
+.text-white { color: #ffffff !important; }
+.nav-link { color: inherit; text-decoration: none; opacity: .9; }
+
+/* Small responsive tweak to keep header layout sane on narrow screens */
+@media (max-width: 768px) {
+	.container { padding-left: 12px; padding-right: 12px; }
+	.row { gap: 8px; }
+}
