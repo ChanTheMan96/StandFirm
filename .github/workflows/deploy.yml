@@ -39,6 +39,6 @@ jobs:
           password: ${{ secrets.CPANEL_PASS }}
           port: ${{ secrets.CPANEL_PORT }}
           protocol: ftps
-          local-dir: ../dist/betterinchrist/
+          local-dir: ./dist/
           server-dir: ${{ secrets.CPANEL_PATH }}
           dangerous-clean-slate: false
