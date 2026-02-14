@@ -23,6 +23,12 @@ jobs:
         run: |
           npm ci
           npm run build
+      - name: Show build output
+        run: |
+          pwd
+          ls -la
+          ls -la dist || true
+          find . -maxdepth 4 -type d -name "dist" -o -name "build" -o -name "out"
 
       # ⚠️ Change this to your real build folder
       - name: Upload to cPanel
