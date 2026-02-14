@@ -32,7 +32,7 @@ jobs:
           username: ${{ secrets.CPANEL_USER }}
           password: ${{ secrets.CPANEL_PASS }}
           port: ${{ secrets.CPANEL_PORT }}
-          protocol: sftp
+          protocol: ftps
           local-dir: ../dist/betterinchrist/
           server-dir: ${{ secrets.CPANEL_PATH }}
           dangerous-clean-slate: false
