@@ -63,7 +63,8 @@ import {
   CheckCircleFill,
   MenuOutline,
   CloseOutline,
-  UnlockOutline
+  UnlockOutline,
+  BookOutline
 } from '@ant-design/icons-angular/icons';
 
 registerLocaleData(en);
@@ -120,7 +121,8 @@ registerLocaleData(en);
       CheckCircleFill,
       MenuOutline,
       CloseOutline,
-      UnlockOutline
+      UnlockOutline,
+      BookOutline
   ] as IconDefinition[] }],
   bootstrap: [AppComponent]
 })

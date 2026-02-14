@@ -104,6 +104,24 @@
   box-shadow: none;
 }
 
+.install-icon-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #9dccff;
+  cursor: pointer;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.install-icon-action:hover,
+.install-icon-action:focus {
+  color: #ffffff;
+  transform: translateY(-1px);
+  outline: none;
+}
+
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
@@ -175,6 +193,24 @@
 .version-link:focus,
 .version-link.ant-btn:hover,
 .version-link.ant-btn:focus {
+  color: #ffffff !important;
+  border-color: rgba(24, 144, 255, 0.95) !important;
+  background: linear-gradient(90deg, rgba(24, 144, 255, 0.48), rgba(24, 144, 255, 0.26)) !important;
+}
+
+.install-link,
+.install-link.ant-btn {
+  justify-content: flex-start;
+  height: auto;
+  color: #e6f4ff !important;
+  border-color: rgba(24, 144, 255, 0.7) !important;
+  background: linear-gradient(90deg, rgba(24, 144, 255, 0.32), rgba(24, 144, 255, 0.16)) !important;
+}
+
+.install-link:hover,
+.install-link:focus,
+.install-link.ant-btn:hover,
+.install-link.ant-btn:focus {
   color: #ffffff !important;
   border-color: rgba(24, 144, 255, 0.95) !important;
   background: linear-gradient(90deg, rgba(24, 144, 255, 0.48), rgba(24, 144, 255, 0.26)) !important;

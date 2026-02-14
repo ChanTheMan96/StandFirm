@@ -13,6 +13,20 @@
         </button>
         <a href="#" (click)="goHome($event)" class="h5 mb-0 text-white">Better in Christ</a>
       </div>
+      <div class="col-auto">
+        <span
+          class="install-icon-action"
+          (click)="addToHomeScreen()"
+          (keydown.enter)="addToHomeScreen()"
+          (keydown.space)="addToHomeScreen()"
+          role="button"
+          tabindex="0"
+          aria-label="Add to Home Screen"
+          title="Add to Home Screen"
+        >
+          <span nz-icon nzType="book" nzTheme="outline"></span>
+        </span>
+      </div>
     </div>
   </div>
 </nav>
