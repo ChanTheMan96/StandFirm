@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { forkJoin, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { forkJoin, of, Subject } from 'rxjs';
+import { catchError, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { BibleService, BiblePassage } from '../services/bible.service';
+import { TextSizeService } from '../services/text-size.service';
+import { BibleVersionService } from '../services/bible-version.service';
 
 interface GuideEntry {
   title: string;
@@ -14,8 +16,9 @@ interface GuideEntry {
   templateUrl: './relationship-guide.component.html',
   styleUrls: ['./relationship-guide.component.scss']
 })
-export class RelationshipGuideComponent implements OnInit {
+export class RelationshipGuideComponent implements OnInit, OnDestroy {
   loading = true;
+  verseTextSize = 16;
   entries: GuideEntry[] = [
     { title: 'Love & Selflessness', ref: '1 Corinthians 13:4-7', takeaway: 'Patience, kindness, and forgiveness are the foundation of love.' },
     { title: 'Mutual Respect', ref: 'Ephesians 5:21', takeaway: 'Relationships should be built on mutual respect and humility.' },
@@ -32,14 +35,36 @@ export class RelationshipGuideComponent implements OnInit {
   ];
 
   passages: (BiblePassage | null)[] = [];
+  private destroy$ = new Subject<void>();
 
-  constructor(private bible: BibleService) {}
+  constructor(
+    private bible: BibleService,
+    private textSizeService: TextSizeService,
+    private bibleVersions: BibleVersionService
+  ) {}
 
   ngOnInit(): void {
+    this.verseTextSize = this.textSizeService.getVerseTextSize();
+    this.bibleVersions.selectedVersion$
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe(() => this.loadPassages());
+  }
+
+  private loadPassages(): void {
+    this.loading = true;
     const calls = this.entries.map(e => this.bible.getPassage(e.ref).pipe(catchError(() => of(null))));
     forkJoin(calls).subscribe(results => {
       this.passages = results;
       this.loading = false;
     }, () => this.loading = false);
+  }
+
+  onVerseTextSizeChange(size: number): void {
+    this.textSizeService.setVerseTextSize(size);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

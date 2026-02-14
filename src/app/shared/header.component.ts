@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NavigationService } from '../services/navigation.service';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+  @Output() changeVersionRequested = new EventEmitter<void>();
   mobileMenuOpen = false;
 
   constructor(private router: Router, private navSvc: NavigationService) {}
@@ -26,5 +27,10 @@ export class HeaderComponent {
 
   closeMobileMenu(): void {
     this.mobileMenuOpen = false;
+  }
+
+  openVersionPicker(): void {
+    this.closeMobileMenu();
+    this.changeVersionRequested.emit();
   }
 }

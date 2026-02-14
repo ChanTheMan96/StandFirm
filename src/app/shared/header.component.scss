@@ -1,5 +1,5 @@
 .app-header {
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid var(--app-border);
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -8,7 +8,7 @@
 }
 
 .app-header a {
-  color: #ffffff;
+  color: var(--app-text);
   text-decoration: none;
 }
 
@@ -107,7 +107,7 @@
 .mobile-menu-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(14, 17, 22, 0.58);
   z-index: 999;
 }
 
@@ -118,12 +118,14 @@
   bottom: 0;
   width: min(82vw, 300px);
   padding: 16px;
-  background: #0b0b0b;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--app-surface);
+  border-right: 1px solid var(--app-border);
   box-shadow: 10px 0 28px rgba(0, 0, 0, 0.45);
   transform: translateX(-100%);
   transition: transform 0.18s ease;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .mobile-menu.open {
@@ -135,14 +137,18 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
-  color: #ffffff;
-  font-weight: 600;
+  color: var(--app-text);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
 }
 
 .mobile-menu-links {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  flex: 1 1 auto;
 }
 
 .mobile-link {
@@ -150,8 +156,26 @@
   width: 100%;
   padding: 10px 12px;
   border-radius: 8px;
-  color: #ffffff;
+  color: var(--app-text);
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--app-border);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.version-link,
+.version-link.ant-btn {
+  justify-content: flex-start;
+  height: auto;
+  color: #e6f4ff !important;
+  border-color: rgba(24, 144, 255, 0.7) !important;
+  background: linear-gradient(90deg, rgba(24, 144, 255, 0.32), rgba(24, 144, 255, 0.16)) !important;
+}
+
+.version-link:hover,
+.version-link:focus,
+.version-link.ant-btn:hover,
+.version-link.ant-btn:focus {
+  color: #ffffff !important;
+  border-color: rgba(24, 144, 255, 0.95) !important;
+  background: linear-gradient(90deg, rgba(24, 144, 255, 0.48), rgba(24, 144, 255, 0.26)) !important;
 }

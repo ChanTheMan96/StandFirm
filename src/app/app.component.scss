@@ -1,0 +1,76 @@
+.version-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.version-error {
+  color: #b42318;
+  margin-bottom: 12px;
+}
+
+.version-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.version-btn {
+  height: 74px;
+  border-radius: 10px;
+  border: 1px solid rgba(24, 144, 255, 0.35);
+  background: linear-gradient(165deg, rgba(24, 144, 255, 0.12), rgba(24, 144, 255, 0.03));
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.version-btn:hover {
+  border-color: rgba(24, 144, 255, 0.7);
+  background: linear-gradient(165deg, rgba(24, 144, 255, 0.22), rgba(24, 144, 255, 0.06));
+}
+
+.version-btn .name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.version-btn .meta {
+  font-size: 12px;
+  color: #b8c4d4;
+}
+
+.global-bible-loading {
+  position: fixed;
+  right: 14px;
+  bottom: 14px;
+  z-index: 1200;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(24, 144, 255, 0.34);
+  background: rgba(14, 17, 22, 0.92);
+  color: var(--app-text);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.34);
+}
+
+@media (max-width: 640px) {
+  .version-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .global-bible-loading {
+    right: 10px;
+    bottom: 10px;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+}

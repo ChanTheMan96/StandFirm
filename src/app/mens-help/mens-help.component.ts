@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BibleService } from '../services/bible.service';
 import { NavigationService } from '../services/navigation.service';
+import { TextSizeService } from '../services/text-size.service';
+import { BibleVersionService } from '../services/bible-version.service';
 import { from, of, Subject } from 'rxjs';
-import { concatMap, toArray, map, catchError, takeUntil } from 'rxjs/operators';
+import { concatMap, toArray, map, catchError, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 
 interface MensHelp {
   emotion: string;
@@ -10,7 +12,7 @@ interface MensHelp {
   problems: string[];
   icon: string;
   keywordVerses: string[];
-  relevantVerses: Array<{ reference: string; text: string }>;
+  relevantVerses: Array<{ reference: string; version: string; text: string }>;
 }
 
 @Component({
@@ -23,8 +25,10 @@ export class MensHelpComponent implements OnInit, OnDestroy {
   selectedEmotionData: MensHelp | null = null;
   showingVerses = false;
   loadingVerses = false;
+  verseTextSize = 16;
 
   private destroy$ = new Subject<void>();
+  private lastSelectedVerseRefs: string[] = [];
   currentGuidance = '';
 
   private readonly guidanceByEmotion: Record<string, string> = {
@@ -69,6 +73,29 @@ export class MensHelpComponent implements OnInit, OnDestroy {
       'When purpose feels unclear, ask God for wisdom for your next faithful step. Trust Him to reveal direction over time.',
     Impatience:
       'In impatience, ask God to slow your heart and steady your words. Let His timing form patience and gentleness in you.',
+  };
+  private readonly sublineByEmotion: Record<string, string> = {
+    Anger: 'Strength under control.',
+    Lust: 'Purity over impulse.',
+    Anxiety: 'Peace over panic.',
+    Depression: 'Hope in the valley.',
+    'Shame & Guilt': 'Mercy over condemnation.',
+    'Leadership Pressure': 'Steady under weight.',
+    'Fatherhood Stress': 'Lead with steady love.',
+    Identity: 'Rooted in Christ.',
+    Addiction: 'Freedom by truth and discipline.',
+    'Financial Stress': 'Wisdom over worry.',
+    'Fear of Failure': 'Faith over fear.',
+    'Work Burnout': 'Rest before rebuilding.',
+    Loneliness: 'Brotherhood over isolation.',
+    'Grief & Loss': 'Comfort in sorrow.',
+    'Spiritual Doubt': 'Questions held by grace.',
+    'Marriage Conflict': 'Truth with grace.',
+    'Control & Pride': 'Surrender builds strength.',
+    Temptation: 'Watchful and anchored.',
+    'People Pleasing': 'Conviction over approval.',
+    'Purpose & Direction': 'Clarity in faithful steps.',
+    Impatience: 'Steady in His timing.'
   };
 
   emotions: MensHelp[] = [
@@ -1109,13 +1136,44 @@ export class MensHelpComponent implements OnInit, OnDestroy {
   constructor(
     private bibleApiService: BibleService,
     private navSvc: NavigationService,
+    private textSizeService: TextSizeService,
+    private bibleVersions: BibleVersionService
   ) {}
 
   ngOnInit(): void {
+    this.verseTextSize = this.textSizeService.getVerseTextSize();
     // Reset view when header triggers a reset (e.g., home/title click)
     this.navSvc.reset$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.deselectEmotion();
     });
+
+    this.bibleVersions.selectedVersion$
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (!this.showingVerses || !this.selectedEmotionData || this.lastSelectedVerseRefs.length === 0) return;
+        this.loadVersesForReferences(this.lastSelectedVerseRefs);
+      });
+  }
+
+  onVerseTextSizeChange(size: number): void {
+    this.textSizeService.setVerseTextSize(size);
+  }
+
+  private normalizeEmotionKey(emotion: string): string {
+    return emotion
+      .toLowerCase()
+      .replace(/&/g, 'and')
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  getEmotionSubline(emotion: string): string {
+    const normalized = this.normalizeEmotionKey(emotion);
+    const match = Object.keys(this.sublineByEmotion).find(
+      (key) => this.normalizeEmotionKey(key) === normalized
+    );
+    return (match ? this.sublineByEmotion[match] : null) || 'Strength shaped by truth.';
   }
 
   selectEmotion(emotion: string) {
@@ -1134,26 +1192,36 @@ export class MensHelpComponent implements OnInit, OnDestroy {
     this.selectedEmotionData = null;
     this.currentGuidance = '';
     this.showingVerses = false;
+    this.lastSelectedVerseRefs = [];
     this.navSvc.setBackVisible(false);
   }
 
   findRelevantVerses() {
     if (!this.selectedEmotionData) return;
 
-    this.loadingVerses = true;
-    this.showingVerses = true;
-
     const selected = this.getRandomVerses(
       this.selectedEmotionData.keywordVerses,
       4,
     );
+    this.lastSelectedVerseRefs = selected;
+    this.loadVersesForReferences(selected);
+  }
+
+  private loadVersesForReferences(selected: string[]) {
+    if (!this.selectedEmotionData) return;
+    this.loadingVerses = true;
+    this.showingVerses = true;
 
     from(selected)
       .pipe(
         concatMap((ref) =>
           this.bibleApiService.getPassage(ref).pipe(
-            map((r) => ({ ref, text: r.text || 'Text unavailable' })),
-            catchError(() => of({ ref, text: 'Unable to load verse text.' })),
+            map((r) => ({
+              ref: r.reference || ref,
+              version: r.translation_name || r.translation_id || '',
+              text: this.bibleApiService.formatPassageQuote(r)
+            })),
+            catchError(() => of({ ref, version: '', text: 'Unable to load verse text.' })),
           ),
         ),
         toArray(),
@@ -1163,6 +1231,7 @@ export class MensHelpComponent implements OnInit, OnDestroy {
         next: (results) => {
           this.selectedEmotionData!.relevantVerses = results.map((r) => ({
             reference: r.ref,
+            version: r.version,
             text: r.text,
           }));
           this.loadingVerses = false;
@@ -1171,6 +1240,7 @@ export class MensHelpComponent implements OnInit, OnDestroy {
           console.error(err);
           this.selectedEmotionData!.relevantVerses = selected.map((s) => ({
             reference: s,
+            version: '',
             text: 'Unable to load verse text.',
           }));
           this.loadingVerses = false;
@@ -1185,6 +1255,7 @@ export class MensHelpComponent implements OnInit, OnDestroy {
 
   backToProblems() {
     this.showingVerses = false;
+    this.lastSelectedVerseRefs = [];
     if (this.selectedEmotionData) this.selectedEmotionData.relevantVerses = [];
   }
 

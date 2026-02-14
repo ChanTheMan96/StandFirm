@@ -4,10 +4,21 @@
       <h1>Who I Am in Christ</h1>
     </section>
 
-    <nz-card class="who-card">
+    <div class="text-size-control control-card">
+      <div class="control-head"><span class="label">Reading Comfort</span><span class="size-chip">{{ verseTextSize }}px</span></div>
+      <nz-slider
+        [nzMin]="14"
+        [nzMax]="24"
+        [nzStep]="1"
+        [(ngModel)]="verseTextSize"
+        (ngModelChange)="onVerseTextSizeChange($event)"
+      ></nz-slider>
+    </div>
+
+    <div class="who-stack">
       <section class="who-section">
-        <h3>I am accepted…</h3>
-        <ul class="who-list">
+        <h2>I Am Accepted...</h2>
+        <ul class="who-list" [style.--sidebar-text-size.px]="verseTextSize">
           <li>I am God’s child. <span class="verse-ref">(John 1:12)</span></li>
           <li>As a disciple, I am a friend of Jesus Christ. <span class="verse-ref">(John 15:15)</span></li>
           <li>I have been justified. <span class="verse-ref">(Romans 5:1)</span></li>
@@ -22,8 +33,8 @@
       </section>
 
       <section class="who-section">
-        <h3>I am secure…</h3>
-        <ul class="who-list">
+        <h2>I Am Secure...</h2>
+        <ul class="who-list" [style.--sidebar-text-size.px]="verseTextSize">
           <li>I am free from condemnation. <span class="verse-ref">(Romans 8:1-2)</span></li>
           <li>I am assured that God works for my good in all circumstances. <span class="verse-ref">(Romans 8:28)</span></li>
           <li>I cannot be separated from the love of God. <span class="verse-ref">(Romans 8:31-39)</span></li>
@@ -37,8 +48,8 @@
       </section>
 
       <section class="who-section">
-        <h3>I am significant…</h3>
-        <ul class="who-list">
+        <h2>I Am Significant...</h2>
+        <ul class="who-list" [style.--sidebar-text-size.px]="verseTextSize">
           <li>I am a branch of Jesus Christ, the true vine, and a channel of His life. <span class="verse-ref">(John 15:5)</span></li>
           <li>I have been chosen and appointed to bear fruit. <span class="verse-ref">(John 15:16)</span></li>
           <li>I am God’s temple. <span class="verse-ref">(1 Corinthians 3:16)</span></li>
@@ -49,6 +60,6 @@
           <li>I can do all things through Christ, who strengthens me. <span class="verse-ref">(Philippians 4:13)</span></li>
         </ul>
       </section>
-    </nz-card>
+    </div>
   </div>
 </div>
