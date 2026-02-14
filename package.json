@@ -1,11 +1,11 @@
 {
-  "name": "christ-rooted",
+  "name": "betterinchrist",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "postbuild": "cp dist/standfirm/index.html dist/standfirm/404.html",
+    "postbuild": "cp dist/betterinchrist/index.html dist/betterinchrist/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

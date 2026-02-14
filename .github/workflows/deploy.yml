@@ -1,0 +1,38 @@
+name: Deploy to GoDaddy cPanel
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Remove these 2 steps if you have NO build process
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install & Build
+        run: |
+          npm ci
+          npm run build
+
+      # ⚠️ Change this to your real build folder
+      - name: Upload to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USER }}
+          password: ${{ secrets.CPANEL_PASS }}
+          port: ${{ secrets.CPANEL_PORT }}
+          protocol: sftp
+          local-dir: ../dist/betterinchrist/
+          server-dir: ${{ secrets.CPANEL_PATH }}
+          dangerous-clean-slate: false

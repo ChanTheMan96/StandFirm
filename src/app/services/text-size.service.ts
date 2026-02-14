@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TextSizeService {
-  private readonly storageKey = 'standfirm.sidebarVerseTextSize.v1';
+  private readonly storageKey = 'betterinchrist.sidebarVerseTextSize.v1';
   private readonly defaultSize = 16;
   private readonly minSize = 14;
   private readonly maxSize = 24;
